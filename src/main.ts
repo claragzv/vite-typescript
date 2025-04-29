@@ -9,6 +9,7 @@ const root = document.querySelector<HTMLDivElement>("#app")!;
 
 const header = document.createElement("div");
 header.innerHTML = HeaderTemplate;
+header.children;
 
 const footer = document.createElement("div");
 footer.innerHTML = Footer;
