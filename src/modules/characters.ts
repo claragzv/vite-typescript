@@ -1,21 +1,32 @@
 import { fetchCharacters } from "../api/api";
-import { Character } from "../api/model/api.model";
+import { Character, CharacterResponse } from "../api/model/api.model";
 
-let charactersCache: Character[] | null = null;
+let charactersResponseCache: CharacterResponse | null = null;
 
 async function displayCharacters(container: HTMLElement) {
-  const characters: Character[] = await fetchCharacters();
+  const charactersResponse: CharacterResponse = await fetchCharacters();
 
-  if (charactersCache == null) {
-    charactersCache = [];
-  }
+  for (let i = 0; i < charactersResponse.results.length; i++) {
+    const characterNow = charactersResponse.results[i];
 
-  for (let i = 0; i < characters.length; i++) {
-    const characterNow = characters[i];
-    if (charactersCache.includes(characterNow)) {
-      console.log("Personaje cargados anteriormente");
+    // Antes hemos usado el .includes pero comparar objetos con eso actua como un === y puede que sean iguales
+    // por su contenido y tal pero como su posicion en memoria es diferente eso siempre va a dar false
+
+    let cacheArray: Character[] = [];
+    if (charactersResponseCache !== null) {
+      cacheArray = charactersResponseCache.results;
+    }
+
+    const cacheCharacter = cacheArray.find((characterCache) => {
+      if (cacheCharacter.id === characterNow.id) {
+        return true;
+      }
+    });
+
+    if (cacheCharacter !== undefined) {
       continue;
     }
+
     const characterElement = document.createElement("div");
     characterElement.classList.add("character-card-container");
     characterElement.innerHTML = `
@@ -25,7 +36,7 @@ async function displayCharacters(container: HTMLElement) {
       `;
     container.appendChild(characterElement);
   }
-  charactersCache = characters;
+  charactersResponseCache = charactersResponse;
 }
 
 export { displayCharacters };

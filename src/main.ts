@@ -9,7 +9,6 @@ const root = document.querySelector<HTMLDivElement>("#app")!;
 
 const header = document.createElement("div");
 header.innerHTML = HeaderTemplate;
-header.children;
 
 const footer = document.createElement("div");
 footer.innerHTML = Footer;
@@ -29,19 +28,22 @@ main.appendChild(characterContent);
 // H1
 const h1 = document.createElement("h1");
 h1.innerText = "Aplicación de Rick y Morty";
+h1.classList.add("title");
+
+header.appendChild(h1);
 
 // Creo una constante que se llama button, al igual que hemos creado antes
 // header, main y footer
 const button = document.createElement("button");
 // Le meto un texto al botón
-button.innerText = "Cargar personajes";
+button.innerText = "Load characters";
 // Le meto estilos al botón
 button.classList.add("button");
 // Le meto un evento al botón, que cuando se haga click en
 // consola aparezca "Cargando personajes..."
 button.addEventListener("click", () => {
-  console.log("Cargando personajes...");
+  console.log("Loading characters...");
   displayCharacters(characterContent);
-  console.log("Personajes cargados");
+  console.log("Characters loaded");
 });
 main.appendChild(button);

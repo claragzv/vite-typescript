@@ -1,11 +1,11 @@
-import { Character, CharacterResponse } from "./model/api.model";
+import { CharacterResponse } from "./model/api.model";
 
 // Una web API es herramientas del navegador que permiten a los desarrolladores interactuar con el navegador y realizar tareas asíncronas como manipular el DOM, manejar eventos, realizar solicitudes HTTP, etc.
-async function fetchCharacters(): Promise<Character[]> {
+async function fetchCharacters(): Promise<CharacterResponse> {
   const response = await fetch("https://rickandmortyapi.com/api/character");
   const content: CharacterResponse = await response.json();
 
-  return content.results;
+  return content;
 }
 
 export { fetchCharacters };
